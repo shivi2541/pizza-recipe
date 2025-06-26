@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>🍕 Pizza Recipe</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <div class="container">
+    <div class="recipe-card">
+      <h1 class="title">🍕 Homemade Pizza</h1>
+      <img
+        src="images.jpeg"
+        class="dish-image"
+        alt="Pizza"
+      />
+
+      <div class="info">
+        <span>Prep Time: 1 hr 45 min</span>
+        <span>Serves: 6</span>
+      </div>
+
+      <button class="toggle-btn" onclick="toggleSection('ingredients')">Show Ingredients</button>
+      <ul id="ingredients" class="section hidden">
+        <li><strong>Dough:</strong></li>
+        <li>1 kg plain flour</li>
+        <li>1.5 tablespoons dry yeast</li>
+        <li>Pinch of sugar</li>
+        <li>1 heaped tablespoon salt</li>
+        <li>700ml warm water</li>
+        <li>Oil for greasing</li>
+
+        <li><strong>Sauce:</strong></li>
+        <li>2 tablespoons olive oil</li>
+        <li>1 teaspoon garlic, crushed</li>
+        <li>700g tomato passata</li>
+        <li>1 heaped tablespoon tomato paste</li>
+        <li>½ teaspoon salt</li>
+        <li>Few handfuls of fresh basil leaves or dried Italian herbs</li>
+
+        <li><strong>Extra toppings:</strong></li>
+        <li>Sliced tomatoes</li>
+        <li>Olives</li>
+        <li>Sun dried tomatoes</li>
+        <li>Vegan mozzarella, etc.</li>
+      </ul>
+
+      <button class="toggle-btn" onclick="toggleSection('steps')">Show Steps</button>
+      <ol id="steps" class="section hidden">
+        <li><strong>Dough:</strong></li>
+        <li>Combine ½ cup of the warm water, yeast and sugar in a small bowl and whisk to combine. Set aside for 5 minutes to activate or until it becomes frothy and bubbly.</li>
+        <li>Pour the flour and salt into an extra-large bowl and make a well in the centre. Add the liquid yeast and the remaining water. Stir with a fork until combined, then use your hands to bring the dough together in the bowl. Add a dash more water if too dry.</li>
+        <li>Turn the dough onto a floured surface and knead well for 10 minutes until smooth and elastic.</li>
+        <li>Place dough into a large greased bowl and cover with a towel. Leave to rise in a draught-free place to double in size (approximately 1 hour). Meanwhile, make the pizza sauce.</li>
+
+        <li><strong>Pizza Sauce:</strong></li>
+        <li>In a medium saucepan, heat the oil over medium heat and fry the garlic for 1 minute, being careful not to brown. Add remaining ingredients, cover and simmer for 10 minutes, stirring occasionally.</li>
+        <li>Preheat oven to 210°C.</li>
+
+        <li><strong>Pizza:</strong></li>
+        <li>Turn the dough onto a floured surface and cut into thirds. Onto well-greased oven trays, gently stretch out the pizza to fit each tray. This will create a wonderful rustic-shaped pizza.</li>
+        <li>Top with the pre-made pizza sauce and your choice of toppings.</li>
+        <li>Bake in oven for 15–20 minutes or until crust underneath is golden brown.</li>
+      </ol>
+
+      <div class="buttons">
+        <button onclick="startCooking()">Start Cooking</button>
+        <button onclick="nextStep()">Next</button>
+      </div>
+
+      <div id="progress-bar">
+        <div id="progress-fill"></div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    document.addEventListener("DOMContentLoaded", () => {
+      let currentStep = 0;
+      const steps = document.querySelectorAll("#steps li");
+
+      function toggleSection(id) {
+        const section = document.getElementById(id);
+        section.classList.toggle("hidden");
+      }
+
+      function startCooking() {
+        if (steps.length === 0) return;
+        steps.forEach(step => step.style.background = "transparent");
+        currentStep = 0;
+        highlightStep();
+      }
+
+      function nextStep() {
+        if (currentStep < steps.length - 1) {
+          currentStep++;
+          highlightStep();
+        }
+      }
+
+      function highlightStep() {
+        steps.forEach((step, index) => {
+          step.style.background = index === currentStep ? "#ffeaa7" : "transparent";
+        });
+
+        const progress = ((currentStep + 1) / steps.length) * 100;
+        document.getElementById("progress-fill").style.width = `${progress}%`;
+      }
+
+      window.toggleSection = toggleSection;
+      window.startCooking = startCooking;
+      window.nextStep = nextStep;
+    });
+  </script>
+</body>
+</html>
